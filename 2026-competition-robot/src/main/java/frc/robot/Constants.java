@@ -40,7 +40,7 @@ public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg p
 
   public static class OperatorConstants
   {
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort = 1;
 
     // Joystick Deadband
     public static final double DEADBAND        = 0.1;
