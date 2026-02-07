@@ -134,7 +134,7 @@ Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveD
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
     } else
     {
-      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+      drivebase.setDefaultCommand(driveRobotOrientedAngularVelocity);
     }
 
     if (Robot.isSimulation())
@@ -182,7 +182,9 @@ Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveD
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
-
+ public void setMotorBrake(boolean brake) {
+    drivebase.setMotorBrake(brake);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
