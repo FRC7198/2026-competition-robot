@@ -6,10 +6,17 @@
     "drive": 40,
     "angle": 20
   },
+<<<<<<< Updated upstream
   "conversionFactors": {
 	"angle": {"gearRatio": 21.4285714286},
 	"drive": {"gearRatio": 6.75, "diameter": 4}
   },
+=======
+"conversionFactors": {
+	"angle": {"gearRatio": 21.4285714286},
+	"drive": {"gearRatio": 6.75, "diameter": 4}
+},
+>>>>>>> Stashed changes
   "rampRate": {
     "drive": 0.25,
     "angle": 0.25
