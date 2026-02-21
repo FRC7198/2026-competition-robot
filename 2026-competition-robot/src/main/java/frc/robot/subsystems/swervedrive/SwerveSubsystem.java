@@ -40,15 +40,15 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
-import swervelib.SwerveController;
-import swervelib.SwerveDrive;
-import swervelib.SwerveDriveTest;
-import swervelib.math.SwerveMath;
-import swervelib.parser.SwerveControllerConfiguration;
-import swervelib.parser.SwerveDriveConfiguration;
-import swervelib.parser.SwerveParser;
-import swervelib.telemetry.SwerveDriveTelemetry;
-import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.yagsl.SwerveController;
+import frc.yagsl.SwerveDrive;
+import frc.yagsl.SwerveDriveTest;
+import frc.yagsl.math.SwerveMath;
+import frc.yagsl.parser.SwerveControllerConfiguration;
+import frc.yagsl.parser.SwerveDriveConfiguration;
+import frc.yagsl.parser.SwerveParser;
+import frc.yagsl.telemetry.SwerveDriveTelemetry;
+import frc.yagsl.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase
 {
