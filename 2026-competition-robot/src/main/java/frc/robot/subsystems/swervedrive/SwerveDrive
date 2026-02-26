@@ -1,0 +1,23 @@
+package frc.robot.subsystems.swervedrive;
+
+public class SwerveDrive() {
+
+    Map<String, swerveModule> swerveModules = new HashMap<>();
+
+    public SwerveDive() {
+
+    }
+
+    public void translate(double x, double y) {
+        for (String key : swerveModules.keySet()) {
+            swerveModules.get(key).translate(x, y, z);
+        }
+    }
+
+    public void rotate(double axis) {
+        for (String key : swerveModules.keySet()) {
+            swerveModules.get(key).rotate(axis);
+        }
+    }
+    
+}
