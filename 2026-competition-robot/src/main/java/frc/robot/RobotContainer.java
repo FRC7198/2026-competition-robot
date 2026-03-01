@@ -165,8 +165,8 @@ public class RobotContainer {
 
    
 
-      //driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.start().whileTrue(Commands.none());
+      driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      //driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
@@ -180,7 +180,7 @@ public class RobotContainer {
           )
       );
 
-      // Or to face backward (180 degrees)
+      // Or to face backward (180 degrees)      
       driverXbox.a().onTrue(
           drivebase.driveCommand(
               () -> 0.0,  // No translation X
