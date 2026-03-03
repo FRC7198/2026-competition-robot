@@ -129,7 +129,6 @@ public class RobotContainer {
 
     //Put the autoChooser on the SmartDashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
-
   }
 
   /**
@@ -141,10 +140,8 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+   private void configureBindings()
+  {
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
@@ -163,55 +160,54 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
     }
 
-   
+    if (Robot.isSimulation())
+    {
+      Pose2d target = new Pose2d(new Translation2d(1, 4),
+                                 Rotation2d.fromDegrees(90));
+      //drivebase.getSwerveDrive().field.getObject("targetPose").setPose(target);
+      driveDirectAngleKeyboard.driveToPose(() -> target,
+                                           new ProfiledPIDController(5,
+                                                                     0,
+                                                                     0,
+                                                                     new Constraints(5, 2)),
+                                           new ProfiledPIDController(5,
+                                                                     0,
+                                                                     0,
+                                                                     new Constraints(Units.degreesToRadians(360),
+                                                                                     Units.degreesToRadians(180))
+                                           ));
+      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
+      driverXbox.button(2).whileTrue(Commands.runEnd(() -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
+                                                     () -> driveDirectAngleKeyboard.driveToPoseEnabled(false)));
 
+//      driverXbox.b().whileTrue(
+//          drivebase.driveToPose(
+//              new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
+//                              );
+
+    }
+    if (DriverStation.isTest())
+    {
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
+
+      driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      //driverXbox.start().whileTrue(Commands.none());
+      driverXbox.back().whileTrue(drivebase.centerModulesCommand());
+      driverXbox.leftBumper().onTrue(Commands.none());
+      driverXbox.rightBumper().onTrue(Commands.none());
+    } else
+    {
+      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
-      // Face forward (0 degrees)
-      driverXbox.y().onTrue(
-          drivebase.driveCommand(
-              () -> 0.0,  // No translation X
-              () -> 0.0,  // No translation Y
-              () -> 0.0,  // Heading X = 0
-              () -> 1.0   // Heading Y = 1 (forward)
-          )
-      );
+    }
 
-      // Or to face backward (180 degrees)      
-      driverXbox.a().onTrue(
-          drivebase.driveCommand(
-              () -> 0.0,  // No translation X
-              () -> 0.0,  // No translation Y
-              () -> 0.0,  // Heading X = 0
-              () -> -1.0  // Heading Y = -1 (backward)
-          )
-      );      
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-      // Face forward (0 degrees)
-      driverXbox.x().onTrue(
-          drivebase.driveCommand(
-              () -> 0.0,  // No translation X
-              () -> 0.0,  // No translation Y
-              () -> 1.0,  // Heading X = 0
-              () -> 0.0   // Heading Y = 1 (forward)
-          )
-      );
-
-      // Or to face right (180 degrees)
-      driverXbox.b().onTrue(
-          drivebase.driveCommand(
-              () -> 0.0,  // No translation X
-              () -> 0.0,  // No translation Y
-              () -> -1.0,  // Heading X = 0
-              () -> 0.0  // Heading Y = -1 (backward)
-          )
-      );      
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
+
  public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
   }
