@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.io.ObjectInputFilter.Status;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -47,4 +49,15 @@ public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg p
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
-  }}
+   
+  }
+
+   public static class BallHandlerConstants
+   {
+     public static final int FEEDMOTOR_CONSTANT    =31;
+      public static final int INTAKEMOTOR_CONSTANT    =30;   
+      public static final double INTAKE_MOTOR_SPEED   =0.5;
+      public static final double FEED_MOTOR_SPEED     =0.5;
+
+    } 
+}
