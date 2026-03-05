@@ -30,7 +30,10 @@ public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg p
 //    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
 //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
 //  }
-
+  public static final class HOPPER_CONSTANTS{
+    public static final int HOPPER_MOTOR = 45;
+    public static final double HOPPER_MOTOR_SPEED = 0.5;
+  }
   public static final class DrivebaseConstants
   {
 
@@ -41,7 +44,7 @@ public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg p
   public static class OperatorConstants
   {
     public static final int kDriverControllerPort = 1;
-
+    
     // Joystick Deadband
     public static final double DEADBAND        = 0.1;
     public static final double LEFT_Y_DEADBAND = 0.1;
