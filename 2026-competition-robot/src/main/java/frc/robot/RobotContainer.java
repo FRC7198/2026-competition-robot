@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -41,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
   private final SendableChooser<Command> autoChooser;
@@ -49,6 +50,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverXbox =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController operatorXbox =
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 // Establish a Sendable Chooser that will be able to be sent to the SmartDashboard, allowing selection of desired auto
 
   /**
@@ -205,7 +208,8 @@ public class RobotContainer {
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
     }
-
+      operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
+      operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
   }
 
  public void setMotorBrake(boolean brake) {
