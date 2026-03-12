@@ -6,7 +6,9 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.BallHandlerSubsystem;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.BallHandler;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -46,7 +48,7 @@ public class RobotContainer {
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
   private final SendableChooser<Command> autoChooser;
-
+  private final BallHandler ballHandlerSubsystem = new BallHandler();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverXbox =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -210,11 +212,16 @@ public class RobotContainer {
     }
       operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
       operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
-  }
+      operatorXbox.rightTrigger().onTrue(ballHandlerSubsystem.launch()).onFalse(ballHandlerSubsystem.stopMotor());
+      operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake()).onFalse(ballHandlerSubsystem.stopMotor());
+  
+  
+    }     
 
  public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
   }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
