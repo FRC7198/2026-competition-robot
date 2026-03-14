@@ -61,7 +61,7 @@ public final class Constants {
   public static class BallHandlerConstants {
     public static final int FEEDMOTOR_CONSTANT = 31;
     public static final int INTAKEMOTOR_CONSTANT = 30;
-    public static final double INTAKE_MOTOR_SPEED = 0.75;
+    public static final double INTAKE_MOTOR_SPEED = 0.85;
     public static final double FEED_MOTOR_SPEED = 1;
 
   }
