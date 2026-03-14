@@ -8,21 +8,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BallHandlerConstants;
 
 public class BallHandler extends SubsystemBase implements AutoCloseable {
-  }
+
   SparkMax IntakeMotor;
   SparkMax FeedMotor;
 
-  public BallHandler (){
+  public BallHandler() {
 
-        IntakeMotor = new SparkMax(BallHandlerConstants.INTAKEMOTOR_CONSTANT, MotorType.kBrushless);
-        FeedMotor = new SparkMax(BallHandlerConstants.FEEDMOTOR_CONSTANT, MotorType.kBrushless);
+    IntakeMotor = new SparkMax(BallHandlerConstants.INTAKEMOTOR_CONSTANT, MotorType.kBrushless);
+    FeedMotor = new SparkMax(BallHandlerConstants.FEEDMOTOR_CONSTANT, MotorType.kBrushless);
+
+  }
+
+  public void spinUpFeedMotor() {
+    FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
+  }
 
   public Command stopMotor() {
     return runOnce(
-      () -> {
-    IntakeMotor.stopMotor();
-    FeedMotor.stopMotor();
-    });
+        () -> {
+          IntakeMotor.stopMotor();
+          FeedMotor.stopMotor();
+        });
   }
 
   public Command intake() {
@@ -35,10 +41,10 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
   public Command launch() {
     return runOnce(
-      () -> {
-    IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEED);
-    FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
-      });
+        () -> {
+          IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEED);
+          FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
+        });
   }
 
   @Override
