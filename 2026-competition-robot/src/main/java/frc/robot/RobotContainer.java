@@ -63,7 +63,7 @@ public class RobotContainer {
    * by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> driverXbox.getLeftY() * -1,
+      () -> driverXbox.getLeftY() * 1,
       () -> driverXbox.getLeftX() * -1)
       .withControllerRotationAxis(driverXbox::getRightX)
       .deadband(OperatorConstants.DEADBAND)
@@ -233,7 +233,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return Autos.exampleAuto(m_exampleSubsystem);
-    return drivebase.getAutonomousCommand("New Auto");
+    return ballHandlerSubsystem.launch();
   }
 
 }
