@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.BallHandlerConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.subsystems.HopperSubsystem;
@@ -217,10 +218,11 @@ public class RobotContainer {
   private void setupOperatorController() {
     operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
     operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
-    operatorXbox.rightTrigger().onTrue(ballHandlerSubsystem.launch()).onFalse(ballHandlerSubsystem.stopMotor());
     operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake()).onFalse(ballHandlerSubsystem.stopMotor());
-  
-    }
+    operatorXbox.a().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE)).onFalse(ballHandlerSubsystem.stopMotor())
+    operatorXbox.x().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)).onFalse(ballHandlerSubsystem.stopMotor())
+    operatorXbox.y().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)).onFalse(ballHandlerSubsystem.stopMotor()) 
+  }
 
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
