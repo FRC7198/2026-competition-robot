@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Timer;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -11,6 +13,8 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
   SparkMax IntakeMotor;
   SparkMax FeedMotor;
+  private boolean isLaunching = false;
+  private Timer launchTimer = new Timer();
 
   public BallHandler() {
 
@@ -24,6 +28,8 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
   }
 
   public Command stopMotor() {
+    isLaunching = false;
+    launchTimer.reset();
     return runOnce(
         () -> {
           IntakeMotor.stopMotor();
@@ -35,24 +41,26 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
     return runOnce(
         () -> {
           IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEED);
-          FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
+          if (launchTimer.hasElapsed(0.5)) {
+            FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
+          }
         });
   }
 
   public Command launch(double speed) {
+
+    if(isLaunching) {} {
+      launchTimer.start();
+    }
+    isLaunching = true;
     return runOnce(
         () -> {
           IntakeMotor.set(speed);
           FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
-         
 
         });
-        
-    
-  
-      }
 
-
+  }
 
   @Override
   public void close() throws Exception {
