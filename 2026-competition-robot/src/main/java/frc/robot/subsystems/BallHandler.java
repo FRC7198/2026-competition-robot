@@ -44,8 +44,15 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
         () -> {
           IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEED);
           FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
+         
+
         });
-  }
+        
+    
+  
+      }
+
+
 
   @Override
   public void close() throws Exception {

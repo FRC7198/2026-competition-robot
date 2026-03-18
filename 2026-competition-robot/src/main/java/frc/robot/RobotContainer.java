@@ -219,7 +219,8 @@ public class RobotContainer {
     operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
     operatorXbox.rightTrigger().onTrue(ballHandlerSubsystem.launch()).onFalse(ballHandlerSubsystem.stopMotor());
     operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake()).onFalse(ballHandlerSubsystem.stopMotor());
-  }
+  
+    }
 
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
