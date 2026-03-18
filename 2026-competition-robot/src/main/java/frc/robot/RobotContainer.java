@@ -219,9 +219,9 @@ public class RobotContainer {
     operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
     operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
     operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake()).onFalse(ballHandlerSubsystem.stopMotor());
-    operatorXbox.a().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE)).onFalse(ballHandlerSubsystem.stopMotor())
-    operatorXbox.x().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)).onFalse(ballHandlerSubsystem.stopMotor())
-    operatorXbox.y().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)).onFalse(ballHandlerSubsystem.stopMotor()) 
+    operatorXbox.a().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE)).onFalse(ballHandlerSubsystem.stopMotor());
+    operatorXbox.x().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)).onFalse(ballHandlerSubsystem.stopMotor());
+    operatorXbox.y().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)).onFalse(ballHandlerSubsystem.stopMotor());
   }
 
   public void setMotorBrake(boolean brake) {
@@ -236,7 +236,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return Autos.exampleAuto(m_exampleSubsystem);
-    return ballHandlerSubsystem.launch();
+    return ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE);
   }
 
 }

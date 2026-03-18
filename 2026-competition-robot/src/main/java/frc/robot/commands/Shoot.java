@@ -8,7 +8,7 @@ import frc.robot.subsystems.BallHandler;
 public class Shoot extends SequentialCommandGroup{
  public Shoot(BallHandler ballHandlerSubsystem){
 addCommands(
-    ballHandlerSubsystem.launch(),
+    //ballHandlerSubsystem.launch(),
     Commands.waitSeconds(2),
     ballHandlerSubsystem.stopMotor()
 

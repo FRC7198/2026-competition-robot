@@ -2,6 +2,7 @@ package frc.robot.commands.ballHandling;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.BallHandlerConstants;
 import frc.robot.subsystems.BallHandler;
 
 public class Launch extends Command {
@@ -26,7 +27,7 @@ public class Launch extends Command {
     public void execute() {
 
         if (spinUpTimer.hasElapsed(.25)) {
-            ballHandlerSubsystem.launch();
+            ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE);
         }
     }
 

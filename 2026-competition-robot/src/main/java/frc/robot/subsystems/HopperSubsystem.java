@@ -33,6 +33,7 @@ public class HopperSubsystem extends SubsystemBase implements AutoCloseable {
     public Command Stop() {
         return runOnce(
                 () -> {
+                    hopperExtender.stopMotor();
                 });
 
     }

@@ -37,7 +37,7 @@ public final class Constants {
   // }
   public static final class HOPPER_CONSTANTS {
     public static final int HOPPER_MOTOR = 45;
-    public static final double HOPPER_MOTOR_SPEED = 0.5;
+    public static final double HOPPER_MOTOR_SPEED = 0.1;
   }
 
   public static final class DrivebaseConstants {
