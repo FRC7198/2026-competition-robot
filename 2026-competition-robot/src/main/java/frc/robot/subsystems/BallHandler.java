@@ -41,9 +41,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
     return runOnce(
         () -> {
           IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEED);
-          if (launchTimer.hasElapsed(0.5)) {
             FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
-          }
         });
   }
 
@@ -56,7 +54,9 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
     return runOnce(
         () -> {
-          IntakeMotor.set(speed);
+          if (launchTimer.hasElapsed(0.5)) {
+            IntakeMotor.set(speed);
+          }
           FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
 
         });
