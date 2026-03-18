@@ -49,10 +49,11 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
   public Command launch(double speed) {
 
-    if(isLaunching) {} {
+    if (!isLaunching) {
       launchTimer.start();
     }
     isLaunching = true;
+
     return runOnce(
         () -> {
           IntakeMotor.set(speed);
