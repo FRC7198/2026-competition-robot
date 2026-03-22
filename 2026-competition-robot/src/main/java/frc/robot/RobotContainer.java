@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.BallHandlerConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.ballHandling.Launch;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -116,47 +118,32 @@ public class RobotContainer {
       .translationHeadingOffset(Rotation2d.fromDegrees(
           0));
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
+
+    Shoot launchCommand = new Shoot(ballHandlerSubsystem);
+    NamedCommands.registerCommand("shoot", launchCommand);
+
     // Configure the trigger bindings
     configureBindings();
 
     // Create the NamedCommands that will be used in PathPlanner
-    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
     // Have the autoChooser pull in all PathPlanner autos as options
     autoChooser = AutoBuilder.buildAutoChooser();
+
+
 
     // Set the default auto (do nothing)
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
     // Add a simple auto option to have the robot drive forward for 1 second then
     // stop
-    autoChooser.addOption("Drive Forward", drivebase.driveForward().withTimeout(1));
+    //autoChooser.addOption("score: "+STARTING_POSITION.FRONT.toString(), launchCommand);
 
     // Put the autoChooser on the SmartDashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
     setupDriverController();
     setupOperatorController();
@@ -209,19 +196,25 @@ public class RobotContainer {
   private void setupOperatorController() {
     operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
     operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
-    operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake()).onFalse(ballHandlerSubsystem.stopMotor());
-    operatorXbox.a().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE))
-        .onFalse(ballHandlerSubsystem.stopMotor());
-    operatorXbox.x().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO))
-        .onFalse(ballHandlerSubsystem.stopMotor());
-    operatorXbox.y().onTrue(ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE))
-        .onFalse(ballHandlerSubsystem.stopMotor());
+    operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake())
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
+
+    operatorXbox.a()
+        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE)))
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
+
+    operatorXbox.x()
+        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)))
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
+
+    operatorXbox.y()
+        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)))
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
   }
 
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -231,7 +224,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return Autos.exampleAuto(m_exampleSubsystem);
-    return ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE);
+    return autoChooser.getSelected();
   }
 
 }

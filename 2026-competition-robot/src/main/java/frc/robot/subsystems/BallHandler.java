@@ -14,6 +14,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
   SparkMax FeedMotor;
   private boolean isLaunching = false;
   private Timer launchTimer = new Timer();
+  private double launchSpeed = BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE;
 
   public BallHandler() {
 
@@ -26,14 +27,11 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
     FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
   }
 
-  public Command stopMotor() {
-    return runOnce(
-        () -> {
+  public void stopMotor() {
           isLaunching = false;
           launchTimer.reset();
           IntakeMotor.stopMotor();
           FeedMotor.stopMotor();
-        });
   }
 
   public Command intake() {
@@ -44,21 +42,12 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
         });
   }
 
-  public Command launch(double speed) {
-
-    return runOnce(
-        () -> {
-          if (!isLaunching) {
-            launchTimer.start();
-          }
-          isLaunching = true;
-          if (launchTimer.hasElapsed(0.55)) {
-            FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
-          }
-          IntakeMotor.set(speed);
-
-        });
-
+  public void launch(double speed) {
+    launchSpeed = speed;
+    if (!isLaunching) {
+      launchTimer.start();
+      isLaunching = true;
+    }
   }
 
   @Override
@@ -67,4 +56,13 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
     FeedMotor.close();
   }
 
+  @Override
+  public void periodic() {
+    if (isLaunching) {
+      if (launchTimer.hasElapsed(1)) {
+        FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
+      }
+      IntakeMotor.set(launchSpeed);
+    }
+  }
 }

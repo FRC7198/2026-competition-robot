@@ -9,7 +9,7 @@ public class Intake extends SequentialCommandGroup {
       addCommands(
             ballHandlerSubsystem.intake(),
             Commands.waitSeconds(2),
-            ballHandlerSubsystem.stopMotor());
+            Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
 
    }
 
