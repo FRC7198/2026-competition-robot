@@ -59,7 +59,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
   @Override
   public void periodic() {
     if (isLaunching) {
-      if (launchTimer.hasElapsed(1)) {
+      if (launchTimer.hasElapsed(1.5)) {
         FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
       }
       IntakeMotor.set(launchSpeed);
