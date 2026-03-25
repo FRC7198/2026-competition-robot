@@ -27,6 +27,11 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
     FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
   }
 
+  public void reverseFeedMotor() {
+    FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
+  }
+
+
   public void stopMotor() {
           isLaunching = false;
           launchTimer.reset();

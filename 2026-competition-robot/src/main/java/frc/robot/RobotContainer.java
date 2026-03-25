@@ -7,6 +7,9 @@ package frc.robot;
 import frc.robot.Constants.BallHandlerConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.Shoot2;
+import frc.robot.commands.extendHopper;
+import frc.robot.commands.retractHopper;
 import frc.robot.commands.ballHandling.Launch;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.subsystems.HopperSubsystem;
@@ -123,6 +126,15 @@ public class RobotContainer {
     Shoot launchCommand = new Shoot(ballHandlerSubsystem);
     NamedCommands.registerCommand("shoot", launchCommand);
 
+    Shoot2 launchCommand2 = new Shoot2(ballHandlerSubsystem);
+    NamedCommands.registerCommand("shoot2", launchCommand2);
+
+    extendHopper launchCommand3 = new extendHopper(hopperSubsystem);
+    NamedCommands.registerCommand("extendHopper", launchCommand3);
+
+    retractHopper launchCommand4 = new retractHopper(hopperSubsystem);
+    NamedCommands.registerCommand("retractHopper", launchCommand4);
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -194,8 +206,12 @@ public class RobotContainer {
   }
 
   private void setupOperatorController() {
-    operatorXbox.leftBumper().onTrue(hopperSubsystem.retract()).onFalse(hopperSubsystem.Stop());
-    operatorXbox.rightBumper().onTrue(hopperSubsystem.extend()).onFalse(hopperSubsystem.Stop());
+    operatorXbox.leftBumper().onTrue(hopperSubsystem.retract())
+        .onFalse(hopperSubsystem.Stop());
+
+    operatorXbox.rightBumper().onTrue(hopperSubsystem.extend())
+        .onFalse(hopperSubsystem.Stop());
+
     operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake())
         .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
 

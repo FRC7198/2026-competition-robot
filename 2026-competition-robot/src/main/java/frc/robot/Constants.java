@@ -38,7 +38,7 @@ public final class Constants {
   // }
   public static final class HOPPER_CONSTANTS {
     public static final int HOPPER_MOTOR = 45;
-    public static final double HOPPER_MOTOR_SPEED = 0.1;
+    public static final double HOPPER_MOTOR_SPEED = 0.2;
   }
 
   public static final class DrivebaseConstants {
@@ -67,6 +67,7 @@ public final class Constants {
   public static class BallHandlerConstants {
     public static final int FEEDMOTOR_CONSTANT = 31;
     public static final int INTAKEMOTOR_CONSTANT = 30;
+    public static final double INTAKE_MOTOR_SPEEDGEAR_ZERO = 0.75;
     public static final double INTAKE_MOTOR_SPEEDGEAR_ONE = 0.85;
     public static final double INTAKE_MOTOR_SPEEDGEAR_TWO = 0.90;
     public static final double INTAKE_MOTOR_SPEEDGEAR_THREE = 1.00; 

@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "red_1_backup"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Red_Hub"
           }
         },
         {
