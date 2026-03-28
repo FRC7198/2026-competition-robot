@@ -58,6 +58,7 @@ public class RobotContainer {
   private final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController operatorXbox = new CommandXboxController(
       OperatorConstants.kOperatorControllerPort);
+
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
 
@@ -77,6 +78,13 @@ public class RobotContainer {
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
 
+       SwerveInputStream driveAngularVelocityInverted = SwerveInputStream.of(drivebase.getSwerveDrive(),
+      () -> driverXbox.getLeftY() * -1,
+      () -> driverXbox.getLeftX() * -1)
+      .withControllerRotationAxis(driverXbox::getRightX)
+      .deadband(OperatorConstants.DEADBAND)
+      .scaleTranslation(0.8)
+      .allianceRelativeControl(true);
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative
    * input stream.
@@ -163,6 +171,8 @@ public class RobotContainer {
 
   private void setupDriverController() {
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+    Command driveFieldOrientedAnglularVelocityInverted = drivebase.driveFieldOriented(driveAngularVelocityInverted);
+
     Command driveRobotOrientedAngularVelocity = drivebase.driveFieldOriented(driveRobotOriented);
     Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
         driveDirectAngle);
@@ -192,16 +202,23 @@ public class RobotContainer {
               new Constraints(Units.degreesToRadians(360),
                   Units.degreesToRadians(180))));
     }
-    driverXbox.b().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-    driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+    driverXbox.rightTrigger().and(driverXbox.b()).onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+   
+    driverXbox.rightTrigger().and(driverXbox.a()).onTrue((Commands.runOnce(drivebase::zeroGyro)));
+   
+
     driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+   
     driverXbox.start().onTrue(Commands.runOnce(() -> {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }));
+   
     driverXbox.back().onTrue(Commands.runOnce(() -> {
-      drivebase.setDefaultCommand(driveRobotOrientedAngularVelocity);
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityInverted);
     }));
+   
     driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+   
     driverXbox.rightBumper().onTrue(Commands.none());
   }
 

@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot2"
+                  "name": "shoot"
                 }
               }
             ]
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot2"
+                  "name": "shoot"
                 }
               }
             ]
@@ -61,7 +61,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot2"
+                  "name": "shoot"
                 }
               }
             ]
