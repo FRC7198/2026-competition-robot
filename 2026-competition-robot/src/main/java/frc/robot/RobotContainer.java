@@ -9,6 +9,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.Shoot2;
 import frc.robot.commands.extendHopper;
+import frc.robot.commands.BotHopper;
 import frc.robot.commands.retractHopper;
 import frc.robot.commands.ballHandling.Launch;
 import frc.robot.subsystems.BallHandler;
@@ -17,6 +18,9 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 import java.io.File;
+
+import org.photonvision.PhotonCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -37,6 +41,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import limelight.Limelight;
+import frc.robot.subsystems.swervedrive.Vision;
+import frc.robot.subsystems.swervedrive.Vision.Cameras;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -48,6 +55,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+
   // The robot's subsystems and commands are defined here...
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
@@ -58,6 +67,8 @@ public class RobotContainer {
   private final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController operatorXbox = new CommandXboxController(
       OperatorConstants.kOperatorControllerPort);
+  private final Limelight limelight = new Limelight("limelight");
+
 
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
@@ -128,6 +139,8 @@ public class RobotContainer {
       .translationHeadingOffset(true)
       .translationHeadingOffset(Rotation2d.fromDegrees(
           0));
+   Command bothopper;
+
 
   public RobotContainer() {
 
@@ -140,9 +153,11 @@ public class RobotContainer {
     extendHopper launchCommand3 = new extendHopper(hopperSubsystem);
     NamedCommands.registerCommand("extendHopper", launchCommand3);
 
+    bothopper = new BotHopper(hopperSubsystem);
     retractHopper launchCommand4 = new retractHopper(hopperSubsystem);
     NamedCommands.registerCommand("retractHopper", launchCommand4);
 
+    
     // Configure the trigger bindings
     configureBindings();
 
@@ -205,7 +220,7 @@ public class RobotContainer {
     driverXbox.rightTrigger().and(driverXbox.b()).onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
    
     driverXbox.rightTrigger().and(driverXbox.a()).onTrue((Commands.runOnce(drivebase::zeroGyro)));
-   
+    driverXbox.leftTrigger().and(driverXbox.a()).onTrue(drivebase.aimAtTarget(Cameras.CENTER_CAM));
 
     driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
    
@@ -243,7 +258,10 @@ public class RobotContainer {
     operatorXbox.y()
         .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)))
         .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
-  }
+  operatorXbox.b()
+        .onTrue(bothopper);
+       
+      }
 
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
