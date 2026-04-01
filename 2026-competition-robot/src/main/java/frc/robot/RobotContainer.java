@@ -41,9 +41,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import limelight.Limelight;
 import frc.robot.subsystems.swervedrive.Vision;
-import frc.robot.subsystems.swervedrive.Vision.Cameras;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -67,7 +65,6 @@ public class RobotContainer {
   private final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController operatorXbox = new CommandXboxController(
       OperatorConstants.kOperatorControllerPort);
-  private final Limelight limelight = new Limelight("limelight");
 
 
   // Establish a Sendable Chooser that will be able to be sent to the
@@ -220,7 +217,6 @@ public class RobotContainer {
     driverXbox.rightTrigger().and(driverXbox.b()).onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
    
     driverXbox.rightTrigger().and(driverXbox.a()).onTrue((Commands.runOnce(drivebase::zeroGyro)));
-    driverXbox.leftTrigger().and(driverXbox.a()).onTrue(drivebase.aimAtTarget(Cameras.CENTER_CAM));
 
     driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
    
