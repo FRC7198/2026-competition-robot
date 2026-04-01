@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue_R_Ramp"
+            "pathName": "Hub_Backup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         },
         {
@@ -37,25 +43,6 @@
                 "type": "named",
                 "data": {
                   "name": "retractHopper"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shoot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "extendHopper"
                 }
               },
               {

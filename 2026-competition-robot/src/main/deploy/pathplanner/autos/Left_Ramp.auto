@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue_L_Ramp"
+            "pathName": "Left_Ramp_Rotate"
           }
         },
         {
@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
@@ -61,7 +61,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
