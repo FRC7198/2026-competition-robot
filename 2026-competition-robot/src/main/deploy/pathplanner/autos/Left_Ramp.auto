@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red_Hub"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "pathName": "Left_Ramp_Rotate"
           }
         },
         {
@@ -29,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
@@ -48,7 +42,26 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "extendHopper"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot2"
                 }
               }
             ]

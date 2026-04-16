@@ -13,6 +13,10 @@ addCommands(
                 Commands.waitSeconds(2.0),
                 hopperSubsystem.extend(),
                 Commands.waitSeconds(2.0),
+                hopperSubsystem.retract(),
+                Commands.waitSeconds(2.0),
+                hopperSubsystem.extend(),
+                Commands.waitSeconds(2.0),
                 hopperSubsystem.Stop());
 
 }

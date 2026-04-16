@@ -70,7 +70,7 @@ public final class Constants {
     public static final int INTAKEMOTOR_CONSTANT = 30;
     public static final double INTAKE_MOTOR_SPEEDGEAR_ZERO = 0.70;
     public static final double INTAKE_MOTOR_SPEEDGEAR_ONE = 0.80;
-    public static final double INTAKE_MOTOR_SPEEDGEAR_TWO = 0.85;
+    public static final double INTAKE_MOTOR_SPEEDGEAR_TWO = 0.75;
     public static final double INTAKE_MOTOR_SPEEDGEAR_THREE = 0.95; 
     public static final double FEED_MOTOR_SPEED = 1;
 

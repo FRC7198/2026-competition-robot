@@ -79,9 +79,9 @@ public class RobotContainer {
    * by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> driverXbox.getLeftY() * 1,
-      () -> driverXbox.getLeftX() * 1)
-      .withControllerRotationAxis(driverXbox::getRightX)
+      () -> driverXbox.getLeftY() * -1,
+      () -> driverXbox.getLeftX() * -1)
+      .withControllerRotationAxis(() -> driverXbox.getRightX() *-1)
       .deadband(OperatorConstants.DEADBAND)
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
@@ -227,35 +227,24 @@ public class RobotContainer {
     driverXbox.back().onTrue(Commands.runOnce(() -> {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityInverted);
     }));
+    driverXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake())
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
    
     driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
    
     driverXbox.rightBumper().onTrue(Commands.none());
+
+    driverXbox.x()
+        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)))
+        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
   }
 
   private void setupOperatorController() {
     operatorXbox.leftBumper().onTrue(hopperSubsystem.retract())
         .onFalse(hopperSubsystem.Stop());
 
-    operatorXbox.rightBumper().onTrue(hopperSubsystem.extend())
-        .onFalse(hopperSubsystem.Stop());
+    
 
-    operatorXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake())
-        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
-
-    operatorXbox.a()
-        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE)))
-        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
-
-    operatorXbox.x()
-        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)))
-        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
-
-    operatorXbox.y()
-        .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_THREE)))
-        .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
-  operatorXbox.b()
-        .onTrue(bothopper);
        
       }
 
