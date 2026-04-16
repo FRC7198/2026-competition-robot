@@ -18,7 +18,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
   public BallHandler() {
 
-    IntakeMotor = new SparkMax(BallHandlerConstants.INTAKEMOTOR_CONSTANT, MotorType.kBrushless);
+   // IntakeMotor = new SparkMax(BallHandlerConstants.INTAKEMOTOR_CONSTANT, MotorType.kBrushless);
     FeedMotor = new SparkMax(BallHandlerConstants.FEEDMOTOR_CONSTANT, MotorType.kBrushless);
 
   }
@@ -42,7 +42,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
   public Command intake() {
     return runOnce(
         () -> {
-          IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE);
+          //IntakeMotor.set(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_ONE);
           FeedMotor.set(BallHandlerConstants.FEED_MOTOR_SPEED);
         });
   }
@@ -57,7 +57,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    IntakeMotor.close();
+    //IntakeMotor.close();
     FeedMotor.close();
   }
 
@@ -67,7 +67,7 @@ public class BallHandler extends SubsystemBase implements AutoCloseable {
       if (launchTimer.hasElapsed(1.5)) {
         FeedMotor.set(-BallHandlerConstants.FEED_MOTOR_SPEED);
       }
-      IntakeMotor.set(launchSpeed);
+      //IntakeMotor.set(launchSpeed);
     }
   }
 }

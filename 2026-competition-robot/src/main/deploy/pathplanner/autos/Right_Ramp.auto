@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
@@ -61,16 +61,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
+                  "name": "shoot2"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "R_Ramp_toMidfield"
           }
         }
       ]
