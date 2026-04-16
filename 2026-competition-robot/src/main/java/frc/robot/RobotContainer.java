@@ -63,8 +63,8 @@ public class RobotContainer {
   private final BallHandler ballHandlerSubsystem = new BallHandler();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController operatorXbox = new CommandXboxController(
-      OperatorConstants.kOperatorControllerPort);
+  //private final CommandXboxController operatorXbox = new CommandXboxController(
+   //   OperatorConstants.kOperatorControllerPort);
 
 
   // Establish a Sendable Chooser that will be able to be sent to the
@@ -178,7 +178,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     setupDriverController();
-    setupOperatorController();
+    //setupOperatorController();
   }
 
   private void setupDriverController() {
@@ -196,7 +196,7 @@ public class RobotContainer {
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
     } else {
-      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+      drivebase.setDefaultCommand(driveRobotOrientedAngularVelocity);
     }
 
     if (Robot.isSimulation()) {
@@ -239,6 +239,7 @@ public class RobotContainer {
         .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
   }
 
+  /*
   private void setupOperatorController() {
     operatorXbox.leftBumper().onTrue(hopperSubsystem.retract())
         .onFalse(hopperSubsystem.Stop());
@@ -247,6 +248,7 @@ public class RobotContainer {
 
        
       }
+        */
 
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
