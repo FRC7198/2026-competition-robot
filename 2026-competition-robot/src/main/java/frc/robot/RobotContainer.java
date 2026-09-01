@@ -214,11 +214,7 @@ public class RobotContainer {
               new Constraints(Units.degreesToRadians(360),
                   Units.degreesToRadians(180))));
     }
-    driverXbox.rightTrigger().and(driverXbox.b()).onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-   
-    driverXbox.rightTrigger().and(driverXbox.a()).onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-    driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
    
     driverXbox.start().onTrue(Commands.runOnce(() -> {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
@@ -227,12 +223,13 @@ public class RobotContainer {
     driverXbox.back().onTrue(Commands.runOnce(() -> {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityInverted);
     }));
-    driverXbox.leftTrigger().onTrue(ballHandlerSubsystem.intake())
+    driverXbox.leftTrigger().whileTrue(ballHandlerSubsystem.intake())
         .onFalse(Commands.runOnce(() -> ballHandlerSubsystem.stopMotor()));
+
    
     driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
    
-    driverXbox.rightBumper().onTrue(Commands.none());
+     // driverXbox.rightBumper().onTrue(Commands.none());
 
     driverXbox.x()
         .onTrue(Commands.runOnce(() -> ballHandlerSubsystem.launch(BallHandlerConstants.INTAKE_MOTOR_SPEEDGEAR_TWO)))
